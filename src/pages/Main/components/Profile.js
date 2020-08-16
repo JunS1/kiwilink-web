@@ -106,7 +106,7 @@ export default class Profile extends React.Component {
                             {this.state.bio}
                         </div>
                         <button className="Edit-Bio" onClick={() => this.setState({ editBio: true })}>
-                            click to edit bio
+                            {this.state.bio.length === 0 ? "click to add a bio" : "click to edit bio"}
                         </button>
                     </div>
                 }
@@ -145,7 +145,9 @@ export default class Profile extends React.Component {
                     :
                     <div>
                         <div>
-                            <button className="Edit-Button" onClick={() => this.setState({ editCourses: true })}>Classes (click here to edit)</button>
+                            <button className="Edit-Button" onClick={() => this.setState({ editCourses: true })}>
+                                {this.state.courses.length === 0 ? "Click here to add classes" : "Classes (click here to edit)"}
+                            </button>
                         </div>
                         <div className="ItemList">
                             {
@@ -167,7 +169,7 @@ export default class Profile extends React.Component {
                                     filterOptions={this.filter(this.props.majors)}
                                     className="Dropdown"
                                     onChange={item => this.setState({ newMajors: item })}
-                                    placeholder="Search for majors"
+                                    placeholder="Search for majors..."
                                 />
                             </div>
                             <button className="Edit-Button" onClick={this.saveMajors}>
@@ -180,7 +182,9 @@ export default class Profile extends React.Component {
                     :
                     <div>
                         <div>
-                            <button className="Edit-Button" onClick={() => this.setState({ editMajors: true })}>Major(s) (click here to edit)</button>
+                            <button className="Edit-Button" onClick={() => this.setState({ editMajors: true })}>
+                                {this.state.majors.length === 0 ? "Click here to add majors" : "Major(s) (click here to edit)"}
+                            </button>
                         </div>
                         <div className="ItemList">
                             {
