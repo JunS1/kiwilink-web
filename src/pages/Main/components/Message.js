@@ -16,6 +16,7 @@ export default class Message extends React.Component {
             displayName: "",
             rooms: [],
             room_details: {},
+            user_details: {},
             refreshing: false,
             url: null,
             most_recent: "",
@@ -80,6 +81,26 @@ export default class Message extends React.Component {
         Fire.getFriendListener(
             (snapShot=>{
                 let uid = snapShot.key
+                firebase.database().ref(`users/${uid}`).once('value').then(res => 
+                    {
+                        let user = res.val();
+                        let major = ""
+                        let classes = []
+                        let newUserDetails = this.state.user_details
+                        for (let index in user.majors) {
+                            major += user.majors[index].name + "\n"
+                        }
+                        for (let index in user.courses) {
+                            classes.push(user.courses[index].name)
+                        }
+                        user.courses = classes
+                        user.majors = major
+                        newUserDetails[`${uid}`] = user
+                        this.setState({
+                            user_details: newUserDetails
+                        })
+                    }
+                ).catch(e=>{console.log(e)})
                 let friend = snapShot.val()
                 let newRooms = this.state.rooms
                 let room_id = friend.room
@@ -265,50 +286,31 @@ export default class Message extends React.Component {
         )
     }
 
-    renderFriendCard(obj) {
-        return (
-            <div className= {"ForYouCard"}>
-                <div className="ForYouImgContainer">
-                    <img
-                        className="ForYouCardImg"
-                        src={obj.image}
-                    />
-                </div>
-                <div className="ForYouUserInfoContainer">
-                    <p>{obj.first_name} {obj.first_name}</p>
-                    {/* <p>{obj.majors}</p> */}
-                    <p>{obj.bio}</p>
-                    <p>classes this quarter:</p>
-                    {this.renderClasses(obj.courses)}
-                </div>
-            </div>
-        )
-    }
-
-    async renderSetting() {
+    renderSetting() {
         if (this.state.currentRoom && this.state.room_details[`${this.state.currentRoom}`].uid) {
             let uid = this.state.room_details[`${this.state.currentRoom}`].uid
-            let user = {}
-            await firebase.database().ref(`users/${uid}`).once('value').then(res => 
-                {
-                    user = res.val();
-                    let major = ""
-                    let classes = []
-                    console.log("user:", user)
-                    for (let index in user.majors) {
-                        major += user.majors[index].name + "\n"
-                    }
-                    for (let index in user.courses) {
-                        classes.push(user.courses[index].name)
-                    }
-                    user.courses = classes
-                    user.majors = major
-                }
-            )
+            let user = this.state.user_details[uid]
+            
             console.log("obj:", user)
-            return this.renderFriendCard(user)
+            return (
+                <div className= {"ForYouCard"}>
+                    <div className="ForYouImgContainer">
+                        <img
+                            className="ForYouCardImg"
+                            src={user.image}
+                        />
+                    </div>
+                    <div className="ForYouUserInfoContainer">
+                        <p>{user.first_name} {user.first_name}</p>
+                        {/* <p>{obj.majors}</p> */}
+                        <p>{user.bio}</p>
+                        <p>classes this quarter:</p>
+                        {this.renderClasses(user.courses)}
+                    </div>
+                </div>
+            )
         } else {
-            return {}
+            // return 
         }
     }
 
@@ -318,7 +320,7 @@ export default class Message extends React.Component {
                 {/* {this.renderPopup()} */}
                 <div style={styles.channelList}>{this.renderChatRooms()}</div>
                 <div style={styles.chat}>{this.renderChat()}</div>
-                <div style={styles.settings}>{}</div>
+                <div style={styles.settings}>{this.renderSetting()}</div>
             </div>
         );
     }
