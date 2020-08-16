@@ -32,9 +32,9 @@ export default class Register extends React.Component {
 
     render() {
         return (
-            <div className="Container">
-                <header className="Header"></header>
-                <div className="Body">
+            <div className="SignInContainer">
+                {/* <header className="Header"></header> */}
+                {/* <div className="Body"> */}
                     <p>Register now</p>
                     {this.state.error.length > 0 && <p>{this.state.error}</p>}
                     <form className="SignInInput" onSubmit={this.handleSubmit}>
@@ -71,16 +71,25 @@ export default class Register extends React.Component {
                             />
                         </label>
                     </form>
-                    <button onClick={this.register}>
-                        Sign up
-                    </button>
-                    <button onClick={() => {
-                        this.props.history.push('/');
-                        window.location.reload();
-                    }}>
-                        Log in
-                    </button>
-                </div>
+                    <div className="SignInButtonContainer">
+                        <button 
+                            lassName="SignInButton"
+                            onClick={this.register}
+                        >
+                            Sign up
+                        </button>
+                        <button     
+                            onClick={() => {
+                                this.props.history.push('/');
+                                window.location.reload();
+                            }}
+                            className="SignInButton"
+                        
+                        >
+                            Log in
+                        </button>
+                    </div>
+                {/* </div> */}
             </div>
         )
     }
