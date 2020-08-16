@@ -46,7 +46,10 @@ export default class Main extends React.Component {
                     
                     {/* Inside here we conditionally render different components*/}
                     <div className="MainContentContainer">
-                        <Profile className="MainContent"></Profile>
+                        <Profile 
+                            user={this.state.user}
+                        >
+                        </Profile>
                     </div>
                     {/* <p>This is Main page</p> */}
                 </div>

@@ -1,10 +1,19 @@
-/* .ProfileContainer {
-    position: "absolute";
-    top: 50%
-} */
+.ProfileContainer {
+    margin: 10vh
+}
 
 
 .BioBox {
     height: 100px;
     width: 300px;
+}
+
+.ProfilePicture {
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+}
+
+.ClassList {
+    display: inline;
 }
