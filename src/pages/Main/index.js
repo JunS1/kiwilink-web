@@ -6,23 +6,28 @@ import logo from '../../logo.svg'
 
 export default class Main extends React.Component {
     state = {
-
+        user: {}
     }
 
     componentDidMount() {
-        // fetch all user data and update local state
-        console.log(firebase.auth().currentUser)
+        firebase.auth().onAuthStateChanged(async (user) => {
+            let uid = user.uid
+            firebase.database().ref(`users/${uid}`).once('value').then(res => {
+                let js_data = res.val()
+                this.setState({user: js_data})
+            })
+        });
     }
 
     render() {
         return (
             <div className="Container">
                 <header className="Header"></header>
-                <body className="Body">
+                <div className="Body">
                     <nav className="MainNavBar">
                         <span className="Top-left">
                             <img src={logo} className="App-logo" alt="logo" />
-                            <text className="Title">KiwiLink</text>
+                            <div className="Title">KiwiLink</div>
                         </span>
                         <ul className="MainNavButton">Profile</ul>
                         <ul className="MainNavButton">For You</ul>
@@ -32,11 +37,10 @@ export default class Main extends React.Component {
                     
                     {/* Inside here we conditionally render different components*/}
                     <div className="MainContent">
-                        <image></image>
                         <p>welcome</p>
                     </div>
                     {/* <p>This is Main page</p> */}
-                </body>
+                </div>
             </div>
         )
     }

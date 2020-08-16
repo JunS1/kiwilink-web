@@ -34,7 +34,7 @@ export default class Register extends React.Component {
         return (
             <div className="Container">
                 <header className="Header"></header>
-                <body className="Body">
+                <div className="Body">
                     <p>Register now</p>
                     {this.state.error.length > 0 && <p>{this.state.error}</p>}
                     <form className="SignInInput" onSubmit={this.handleSubmit}>
@@ -80,7 +80,7 @@ export default class Register extends React.Component {
                     }}>
                         Log in
                     </button>
-                </body>
+                </div>
             </div>
         )
     }

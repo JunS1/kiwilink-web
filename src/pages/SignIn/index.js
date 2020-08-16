@@ -1,7 +1,6 @@
 import React from 'react';
 import "./signIn.css";
 import firebase from '../../Firebase'
-import { Redirect } from 'react-router-dom';
 
 export default class SignIn extends React.Component {
 
@@ -26,7 +25,7 @@ export default class SignIn extends React.Component {
         return (
             <div className="Container">
                 <header className="Header"></header>
-                <body className="Body">
+                <div className="Body">
                     <p>Welcome to KiwiLink</p>
                     {this.state.error.length > 0 && <p>{this.state.error}</p>}
                     <form className="SignInInput" onSubmit={this.handleSubmit}>
@@ -63,7 +62,7 @@ export default class SignIn extends React.Component {
                     >
                         Sign up
                     </button>
-                </body>
+                </div>
             </div>
         )
     }
