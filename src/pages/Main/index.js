@@ -4,6 +4,9 @@ import firebase from '../../Firebase'
 import "./index.css"
 import logo from '../../logo.svg'
 import Profile from './components/Profile'
+import ForYou from './components/ForYou';
+import Explore from './components/Explore';
+import Message from './components/Message';
 
 export default class Main extends React.Component {
     state = {
@@ -94,7 +97,10 @@ export default class Main extends React.Component {
                     
                     {/* Inside here we conditionally render different components*/}
                     <div className="MainContentContainer">
-                        <Profile className="MainContent"></Profile>
+                        {this.state.profile && <Profile className="MainContent"></Profile>}
+                        {this.state.for_you && <ForYou className="MainContent"></ForYou>}
+                        {this.state.explore && <Explore className="MainContent"></Explore>}
+                        {this.state.message && <Message className="MainContent"></Message>}
                     </div>
                     {/* <p>This is Main page</p> */}
                 </div>

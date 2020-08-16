@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default class Message extends React.Component {
+export default class Explore extends React.Component {
     render() {
         return(
             <div>
-                <p>This is the message screen</p>
+                <p>This is the explore screen</p>
             </div>
         );
     }
