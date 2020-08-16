@@ -24,6 +24,7 @@ export default class Main extends React.Component {
             console.log(uid)
             firebase.database().ref(`users/${uid}`).once('value').then(res => {
                 let js_data = res.val()
+                js_data.uid = uid;
                 this.setState({user: js_data, isLoading: false})
             })
         });
@@ -65,6 +66,12 @@ export default class Main extends React.Component {
         })
     }
 
+    saveBio = (bio) => {
+        let temp = this.state.user;
+        temp.bio = bio;
+        this.setState({ user: temp });
+    }
+
     render() {
         return (
             this.state.isLoading ? null :
@@ -100,7 +107,7 @@ export default class Main extends React.Component {
                     
                     {/* Inside here we conditionally render different components*/}
                     <div className="MainContentContainer">
-                        {this.state.profile && <Profile user={this.state.user} className="MainContent"></Profile>}
+                        {this.state.profile && <Profile user={this.state.user} saveBio={this.saveBio} className="MainContent"></Profile>}
                         {this.state.for_you && <ForYou className="MainContent"></ForYou>}
                         {this.state.explore && <Explore className="MainContent"></Explore>}
                         {this.state.message && <Message className="MainContent"></Message>}

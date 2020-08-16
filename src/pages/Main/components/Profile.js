@@ -1,4 +1,5 @@
 import React from 'react';
+import firebase from '../../../Firebase'
 import "./Profile.css"
 
 export default class Profile extends React.Component {
@@ -7,11 +8,25 @@ export default class Profile extends React.Component {
         super(props);
         this.state = {
             bio: "",
+            newBio: "",
+            editBio: false,
+            editCourses: false,
+            editMajors: false
         }
     }
 
     componentDidMount () {
-        this.setState({ bio : this.props.user.bio })
+        this.setState({ bio : this.props.user.bio, newBio: this.props.user.bio })
+    }
+
+    saveBio = () => {
+        this.setState({bio: this.state.newBio});
+        // save to firebase and call back?
+        firebase.database().ref(`users/${this.props.user.uid}`).update({
+            bio: this.state.newBio
+        })
+        this.props.saveBio(this.state.newBio);
+        this.setState({ editBio: false })
     }
 
     render () {
@@ -28,14 +43,33 @@ export default class Profile extends React.Component {
                 <div className="Welcome">
                     Welcome, {this.props.user.first_name} {this.props.user.last_name}
                 </div>
-                <div className="Bio">
-                        {this.state.bio}
-                </div>
-                <div>
-                    <button className="Edit-Bio">
-                        click to edit bio
-                    </button>
-                </div>
+                {
+                    this.state.editBio ?
+                        <div>
+                            <div>
+                                <textarea
+                                    className="Bio-Area"
+                                    value={this.state.newBio}
+                                    onChange={event => this.setState({ newBio: event.target.value })}
+                                />
+                            </div>
+                            <button className="Edit-Bio" onClick={this.saveBio}>
+                                save
+                            </button>
+                            <button className="Edit-Bio" onClick={() => this.setState({ editBio: false, newBio: this.state.bio })}>
+                                cancel
+                            </button>
+                        </div>
+                    :
+                    <div>
+                        <div className="Bio">
+                            {this.state.bio}
+                        </div>
+                        <button className="Edit-Bio" onClick={() => this.setState({ editBio: true })}>
+                            click to edit bio
+                        </button>
+                    </div>
+                }
                 <div className="Line"></div>
                 <div>
                     <div>
