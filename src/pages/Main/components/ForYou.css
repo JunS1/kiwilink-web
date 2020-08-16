@@ -75,3 +75,10 @@
     /* bottom: 5px; */
 }
 
+.FullName {
+    font-size: 22px;
+}
+
+.ClassesArray {
+    flex-direction: column;
+}

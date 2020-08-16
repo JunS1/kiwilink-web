@@ -32,7 +32,7 @@ export default class ForYou extends React.Component {
             arr = courses
         }
         return (
-            arr.map( item=> {return (<p>{item}</p>)})
+            arr.map( item=> {return (<p className="ClassesArray">{item}</p>)})
         )
     }
 
@@ -71,10 +71,15 @@ export default class ForYou extends React.Component {
                         </button>
                     </div>
                     <div className="ForYouUserInfoContainer">
-                        <p>{obj.first_name}</p>
+                        <br></br>
+                        <div className="FullName">
+                            <p>{obj.first_name + " " + obj.last_name}</p>
+                        </div>
                         <p>{obj.bio}</p>
                         <p>classes this quarter:</p>
-                        {this.renderClasses(obj.classes)}
+                        <div className="ClassesArray">
+                            {this.renderClasses(obj.classes)}   
+                        </div>
                     </div>
                 </div>
             )
