@@ -44,7 +44,8 @@
     margin: 10px;
     border-radius: 15px;
     background: #7DD708;
-    box-shadow:  4px 4px rgba(0, 0, 0, 0.25);
+    border-color: #7DD708;
+    /* box-shadow:  4px 4px rgba(0, 0, 0, 0.25); */
 }
 
 .DeclineButton {
@@ -52,6 +53,33 @@
     height: 5vh;
     margin: 10px;
     border-radius: 15px;
+    border-color: #D4D4D4;
     background: #D4D4D4;
     box-shadow:  4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.FullName {
+    font-size: 22px;
+}
+
+.ClassesArray {
+    font-size: 15px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.RoundBox {
+    background-color: #0BB68C;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 30px;
+}
+
+.ClassTitle {
+    font-size: 12px;
 }

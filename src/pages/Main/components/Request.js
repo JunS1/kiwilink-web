@@ -69,7 +69,7 @@ export default class Request extends React.Component {
             arr = courses
         }
         return (
-            arr.map( item=> {return (<p>{item}</p>)})
+            arr.map( item=> {return (<div className="RoundBox"><p className="ClassesArray">{item}</p></div>)})
         )
     }
 
@@ -96,10 +96,14 @@ export default class Request extends React.Component {
                             </button>
                         </div>
                         <div className="ForYouUserInfoContainer">
-                            <p>{obj.first_name}</p>
+                            <div className="FullName">
+                                <p>{obj.first_name + " " + obj.last_name}</p>
+                            </div>
                             <p>{obj.bio}</p>
-                            <p>classes this quarter:</p>
-                            {this.renderClasses(obj.classes)}
+                            <p className="ClassTitle">classes this quarter:</p>
+                            <div className="ClassesArray">
+                                {this.renderClasses(obj.classes)}   
+                            </div>
                         </div>
                     </div>
                     <div className="RequestButtonContainer">
@@ -109,7 +113,7 @@ export default class Request extends React.Component {
                                 this.confirmRequest(idx)
                             }}
                         >
-                            Accpet
+                            Accept
                         </button>
                         <button 
                             className="DeclineButton"

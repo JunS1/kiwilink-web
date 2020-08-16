@@ -139,12 +139,12 @@ export default class Main extends React.Component {
                         </ul>
                         <ul className="MainNavButton">
                             <button className={this.state.request ? "Selected" : "Nav-Button"} onClick={this.goToFriendRequest}>
-                                <div className="Nav-Text">Friend Request</div>
+                                <div className="Nav-Text">Requests</div>
                             </button>
                         </ul>
                         <ul className="MainNavButton">
                             <button className={this.state.message ? "Selected" : "Nav-Button"} onClick={this.goToMessage}>
-                                <div className="Nav-Text">Message</div>
+                                <div className="Nav-Text">Messages</div>
                             </button>
                         </ul> 
                     </nav>
