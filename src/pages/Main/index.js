@@ -6,7 +6,11 @@ import logo from '../../logo.svg'
 
 export default class Main extends React.Component {
     state = {
-        user: {}
+        user: {},
+        profile: true,
+        for_you: false,
+        explore: false,
+        message: false
     }
 
     componentDidMount() {
@@ -17,6 +21,42 @@ export default class Main extends React.Component {
                 this.setState({user: js_data})
             })
         });
+    }
+
+    goToProfile = () => {
+        this.setState({
+            profile: true,
+            for_you: false,
+            explore: false,
+            message: false
+        })
+    }
+
+    goToForYou = () => {
+        this.setState({
+            profile: false,
+            for_you: true,
+            explore: false,
+            message: false
+        })
+    }
+
+    goToExplore = () => {
+        this.setState({
+            profile: false,
+            for_you: false,
+            explore: true,
+            message: false
+        })
+    }
+
+    goToMessage = () => {
+        this.setState({
+            profile: false,
+            for_you: false,
+            explore: false,
+            message: true
+        })
     }
 
     render() {
@@ -30,16 +70,24 @@ export default class Main extends React.Component {
                             <div className="Title">KiwiLink</div>
                         </span>
                         <ul className="MainNavButton">
-                            <button className="Nav-Button">Profile</button>
+                            <button className={this.state.profile ? "Selected" : "Nav-Button"} onClick={this.goToProfile}>
+                                <div className="Nav-Text">Profile</div>
+                            </button>
                         </ul>
                         <ul className="MainNavButton">
-                            <button className="Nav-Button">For You</button>
+                            <button className={this.state.for_you ? "Selected" : "Nav-Button"} onClick={this.goToForYou}>
+                                <div className="Nav-Text">For You</div>
+                            </button>
                         </ul>
                         <ul className="MainNavButton">
-                            <button className="Nav-Button">Explore</button>
+                            <button className={this.state.explore ? "Selected" : "Nav-Button"} onClick={this.goToExplore}>
+                                <div className="Nav-Text">Explore</div>
+                            </button>
                         </ul>
                         <ul className="MainNavButton">
-                            <button className="Nav-Button">Message</button>
+                            <button className={this.state.message ? "Selected" : "Nav-Button"} onClick={this.goToMessage}>
+                                <div className="Nav-Text">Message</div>
+                            </button>
                         </ul> 
                     </nav>
                     
