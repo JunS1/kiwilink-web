@@ -9,7 +9,7 @@ Email: demokiwilink@gmail.com
 Password: securepassword
 
 Then, you'll be able to edit your profile information. Lastly, you can visit the 
-'For You' or 'Explore' page to see other users and befriend them!
+'For You' or 'Explore' page to see other users and click on the star button to add them as a friend!
 
 ## Available Scripts
 
