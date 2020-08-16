@@ -111,6 +111,12 @@ export default class Main extends React.Component {
         this.setState({ user: temp });
     }
 
+    logOut = () => {
+        firebase.auth().signOut();
+        this.props.history.push("/");
+        window.location.reload();
+    }
+
     render() {
         return (
             this.state.isLoading ? null :
@@ -145,6 +151,11 @@ export default class Main extends React.Component {
                         <ul className="MainNavButton">
                             <button className={this.state.message ? "Selected" : "Nav-Button"} onClick={this.goToMessage}>
                                 <div className="Nav-Text">Messages</div>
+                            </button>
+                        </ul>
+                        <ul className="MainNavButton">
+                            <button className="Nav-Button" onClick={this.logOut}>
+                                <div className="Nav-Text">Logout</div>
                             </button>
                         </ul> 
                     </nav>
