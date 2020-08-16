@@ -10,16 +10,19 @@
 
 .MainContentContainer {
     position: absolute;
-    left: 300px;
-    width: calc(100vw - 300px);
+    left: 180px;
+    width: calc(100vw - 180px);
     height: 100vh;
     background: #FFFFFF;
 }
 
 .MainNavBar {
-    position: fixed;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     left: 0;
-    width: 300px;
+    width: 180px;
     height: 100vh;
     background: transparent;
 }
@@ -28,7 +31,7 @@
     font-size: 0.65em;
     line-height: 1;
     position: relative;
-    padding: 2.5em 3.75em 1.5em 2.5em;
+    /* padding: 2.5em 3.75em 1.5em 2.5em; */
 }
 
 .Selected {
@@ -73,11 +76,11 @@
 
 .Title {
     position: relative;
-    top: 44px;
-    right: 15px;
+    top: 22px;
+    right: 20px;
     font-style: normal;
     font-weight: normal;
-    font-size: 35px;
+    font-size: 30px;
     line-height: 53px;
 
     /* white */

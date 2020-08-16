@@ -29,8 +29,6 @@ class Fire {
                 user: item.user,
                 sent: true
             }
-            console.log(item.user)
-            console.log(item.text)
             this.getRoom(room).child("/texts/").push(message)
         });
     }
@@ -40,7 +38,6 @@ class Fire {
         const {key: _id} = message;
         const createdAt = new Date(timestamp);
         // user.avatar = await this.picture(user._id)   CAUSES MESSAGES TO BE REVERSED....?
-        console.log(user)
         return {
             _id,
             createdAt,

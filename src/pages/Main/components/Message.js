@@ -3,6 +3,7 @@ import { GiftedChat } from "react-web-gifted-chat";
 import { v4 as uuidv4 } from 'uuid'
 import Fire from '../../../Fire'
 import firebase from '../../../Firebase'
+import CreateGroup from './CreateGroup'
 import "./Message.css"
 
 
@@ -20,7 +21,8 @@ export default class Message extends React.Component {
             most_recent: "",
             isLoading: true,
             focused: false,
-            currentRoom: null
+            currentRoom: null,
+            create: false
         }
     }
 
@@ -90,6 +92,7 @@ export default class Message extends React.Component {
                     data_json.group_name = friend.first_name + " " + friend.last_name;
                     data_json.recent = {};
                     data_json.messages = ((temp_room_detail[room_id] && temp_room_detail[room_id].messages) || []);
+                    data_json.uid = uid;
                     temp_room_detail[room_id] = data_json;
                     this.setState(
                         { 
@@ -162,8 +165,15 @@ export default class Message extends React.Component {
         return 0;
     }
 
+    cancelCreateGroup = () => {
+        this.setState({ create: false })
+    }
+
     renderChat() {
-        const {currentRoom} = this.state
+        const {currentRoom, create} = this.state
+        if (create) {
+            return <CreateGroup user={this.props.user} cancel={this.cancelCreateGroup} />
+        }
         if (currentRoom) 
             return (
                 <GiftedChat
@@ -191,7 +201,7 @@ export default class Message extends React.Component {
                         Convos
                     </div>
                 </div>
-                <button className="Create" onClick={() => console.log("clicked")}>
+                <button className="Create" onClick={() => this.setState({ create: true })}>
                     Create new group +
                 </button>
                 {
@@ -209,7 +219,8 @@ export default class Message extends React.Component {
                                         })
                                     }
                                     this.setState({
-                                        currentRoom: item.id
+                                        currentRoom: item.id,
+                                        create: false
                                     })
                                 }}
                             >   
@@ -236,6 +247,69 @@ export default class Message extends React.Component {
                 }
             </div>
         )
+    }
+
+    renderClasses = (courses) => {
+        let limit = 3
+        let arr = []
+        if (courses.length > limit) {
+            for (let i = 0; i < (limit - 1); i++) {
+                arr.push(courses[i]);
+            }
+            arr.push("and more...");
+        } else {
+            arr = courses
+        }
+        return (
+            arr.map( item=> {return (<div className="RoundBox"><p className="ClassesArray">{item}</p></div>)})
+        )
+    }
+
+    renderFriendCard(obj) {
+        return (
+            <div className= {"ForYouCard"}>
+                <div className="ForYouImgContainer">
+                    <img
+                        className="ForYouCardImg"
+                        src={obj.image}
+                    />
+                </div>
+                <div className="ForYouUserInfoContainer">
+                    <p>{obj.first_name} {obj.first_name}</p>
+                    {/* <p>{obj.majors}</p> */}
+                    <p>{obj.bio}</p>
+                    <p>classes this quarter:</p>
+                    {this.renderClasses(obj.courses)}
+                </div>
+            </div>
+        )
+    }
+
+    async renderSetting() {
+        if (this.state.currentRoom && this.state.room_details[`${this.state.currentRoom}`].uid) {
+            let uid = this.state.room_details[`${this.state.currentRoom}`].uid
+            let user = {}
+            await firebase.database().ref(`users/${uid}`).once('value').then(res => 
+                {
+                    user = res.val();
+                    let major = ""
+                    let classes = []
+                    console.log("user:", user)
+                    for (let index in user.majors) {
+                        major += user.majors[index].name + "\n"
+                    }
+                    for (let index in user.courses) {
+                        classes.push(user.courses[index].name)
+                    }
+                    user.courses = classes
+                    user.majors = major
+                }
+            )
+            console.log("obj:", user)
+            return this.renderFriendCard(user)
+        } else {
+            return {}
+        }
     }
 
     render() {
@@ -274,7 +348,7 @@ const styles = {
     },
     settings: {
         display: "flex",
-        flex: 1,
+        flex: 2,
         flexDirection: "column",
     },
     convoList: {
