@@ -29,10 +29,18 @@ export default class Main extends React.Component {
                             <img src={logo} className="App-logo" alt="logo" />
                             <div className="Title">KiwiLink</div>
                         </span>
-                        <ul className="MainNavButton">Profile</ul>
-                        <ul className="MainNavButton">For You</ul>
-                        <ul className="MainNavButton">Explore</ul>
-                        <ul className="MainNavButton">Message</ul> 
+                        <ul className="MainNavButton">
+                            <button className="Nav-Button">Profile</button>
+                        </ul>
+                        <ul className="MainNavButton">
+                            <button className="Nav-Button">For You</button>
+                        </ul>
+                        <ul className="MainNavButton">
+                            <button className="Nav-Button">Explore</button>
+                        </ul>
+                        <ul className="MainNavButton">
+                            <button className="Nav-Button">Message</button>
+                        </ul> 
                     </nav>
                     
                     {/* Inside here we conditionally render different components*/}
