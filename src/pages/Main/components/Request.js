@@ -101,9 +101,9 @@ export default class Request extends React.Component {
                             </div>
                             <p>{obj.bio}</p>
                             <p className="ClassTitle">classes this quarter:</p>
-                            <div className="ClassesArray">
+                            {/* <div className="ClassesArray"> */}
                                 {this.renderClasses(obj.classes)}   
-                            </div>
+                            {/* </div> */}
                         </div>
                     </div>
                     <div className="RequestButtonContainer">

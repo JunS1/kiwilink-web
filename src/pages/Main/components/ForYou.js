@@ -31,6 +31,9 @@ export default class ForYou extends React.Component {
         } else {
             arr = courses
         }
+        if (arr.length == 0) {
+            arr.push("no classes")
+        }
         return (
             arr.map( item=> {return (<div className="RoundBox"><p className="ClassesArray">{item}</p></div>)})
         )
@@ -77,9 +80,9 @@ export default class ForYou extends React.Component {
                         </div>
                         <p>{obj.bio}</p>
                         <p className="ClassTitle">classes this quarter:</p>
-                        <div className="ClassesArray">
+                        {/* <div className="ClassesArray"> */}
                             {this.renderClasses(obj.classes)}   
-                        </div>
+                        {/* </div> */}
                     </div>
                 </div>
             )

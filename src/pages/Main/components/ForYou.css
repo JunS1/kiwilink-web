@@ -92,9 +92,13 @@
 
 .RoundBox {
     background-color: #0BB68C;
-    margin-left: 10px;
-    margin-right: 10px;
+    /* margin-left: 10px; */
+    /* margin-right: 10px; */
     border-radius: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    margin: 10px;
 }
 
 .ClassTitle {
