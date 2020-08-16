@@ -7,6 +7,7 @@ import Profile from './components/Profile'
 import ForYou from './components/ForYou';
 import Explore from './components/Explore';
 import Message from './components/Message';
+import Request from './components/Request'
 
 export default class Main extends React.Component {
     state = {
@@ -16,9 +17,11 @@ export default class Main extends React.Component {
         for_you: false,
         explore: false,
         message: false,
+        request: false,
         courses: [],
         majors: []
     }
+
 
     componentDidMount() {
         firebase.auth().onAuthStateChanged(async (user) => {
@@ -45,6 +48,7 @@ export default class Main extends React.Component {
             profile: true,
             for_you: false,
             explore: false,
+            request: false,
             message: false
         })
     }
@@ -54,6 +58,7 @@ export default class Main extends React.Component {
             profile: false,
             for_you: true,
             explore: false,
+            request: false,
             message: false
         })
     }
@@ -63,6 +68,17 @@ export default class Main extends React.Component {
             profile: false,
             for_you: false,
             explore: true,
+            request: false,
+            message: false
+        })
+    }
+
+    goToFriendRequest = () => {
+        this.setState({
+            profile: false,
+            for_you: false,
+            explore: false,
+            request: true,
             message: false
         })
     }
@@ -72,6 +88,7 @@ export default class Main extends React.Component {
             profile: false,
             for_you: false,
             explore: false,
+            request: false,
             message: true
         })
     }
@@ -121,6 +138,11 @@ export default class Main extends React.Component {
                             </button>
                         </ul>
                         <ul className="MainNavButton">
+                            <button className={this.state.request ? "Selected" : "Nav-Button"} onClick={this.goToFriendRequest}>
+                                <div className="Nav-Text">Friend Request</div>
+                            </button>
+                        </ul>
+                        <ul className="MainNavButton">
                             <button className={this.state.message ? "Selected" : "Nav-Button"} onClick={this.goToMessage}>
                                 <div className="Nav-Text">Message</div>
                             </button>
@@ -143,6 +165,7 @@ export default class Main extends React.Component {
                         {this.state.for_you && <ForYou className="MainContent"></ForYou>}
                         {this.state.explore && <Explore className="MainContent"></Explore>}
                         {this.state.message && <Message user={this.state.user} className="MainContent"></Message>}
+                        {this.state.request && <Request className="MainContent"></Request>} 
                     </div>
                     {/* <p>This is Main page</p> */}
                 </div>

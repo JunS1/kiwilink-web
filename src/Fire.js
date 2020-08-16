@@ -40,6 +40,7 @@ class Fire {
         const {key: _id} = message;
         const createdAt = new Date(timestamp);
         // user.avatar = await this.picture(user._id)   CAUSES MESSAGES TO BE REVERSED....?
+        console.log(user)
         return {
             _id,
             createdAt,
@@ -282,57 +283,88 @@ class Fire {
         firebase.database().ref(`users/${this.uid}/friends`).off()
     }
 
-    // // request friends to a user
-    // requestFriend(uid) {
-    //     // console.log('send friend request to: ', uid, name)
-    //     firebase.database().ref(`/users/${this.uid}/requestedFriends/`).update({[uid]: uid})
-    //     firebase.database().ref(`users/${uid}/requestingFriends/`).update({[this.uid]: this.uid})
-    // }
+    // request friends to a user
+    requestFriend(uid) {
+        // console.log('send friend request to: ', uid, name)
+        firebase.database().ref(`/users/${this.uid}/requestedFriends/`).update({[uid]: uid})
+        firebase.database().ref(`users/${uid}/requestingFriends/`).update({[this.uid]: this.uid})
+    }
 
-    // getRequestListener = (add_callback, remove_callback) => {
-    //     firebase.database().ref(`users/${this.uid}/requestingFriends`).on('child_added', async (snapshot) => add_callback(snapshot));
-    //     firebase.database().ref(`users/${this.uid}/requestingFriends`).on('child_removed', async (snapshot) => remove_callback(snapshot));
-    // }
+    getRequestListener = (add_callback, remove_callback) => {
+        firebase.database().ref(`users/${this.uid}/requestingFriends`).on('child_added', async (snapshot) => add_callback(snapshot));
+        firebase.database().ref(`users/${this.uid}/requestingFriends`).on('child_removed', async (snapshot) => remove_callback(snapshot));
+    }
 
-    // unsubscribedRequestListener = () => {
-    //     firebase.database().ref(`users/${this.uid}/requestingFriends`).off();
-    // }
+    unsubscribedRequestListener = () => {
+        firebase.database().ref(`users/${this.uid}/requestingFriends`).off();
+    }
 
-    // getReqUsers = async (users) => {
-    //     await firebase.database().ref(`users/`).once('value')
-    //     .then(dataSnapShot => {
-    //             let allUserData = dataSnapShot.val()
-    //             for (let reqUser in allUserData[this.uid].requestingFriends){
-    //                 let major_names = ""
-    //                 for (let major in allUserData[reqUser].majors) {
-    //                     major_names = major_names.concat(allUserData[reqUser].majors[major].name)
-    //                     major_names = major_names.concat(" ")
-    //                 }
-    //                 allUserData[reqUser].allMajors = major_names
-    //                 let course_names = []
-    //                 for (let course in allUserData[reqUser].courses) {
-    //                     course_names.push(allUserData[reqUser].courses[course].name)
-    //                 }
-    //                 users.push({
-    //                     uid: reqUser,
-    //                     first_name: allUserData[reqUser].first_name,
-    //                     last_name: allUserData[reqUser].last_name,
-    //                     bio: allUserData[reqUser].bio,
-    //                     major: allUserData[reqUser].allMajors,
-    //                     classes: course_names,
-    //                     image: allUserData[reqUser].image,
-    //                 })
-    //             }
-    //         }
-    //     )
-    // }
+    getAllReqUsers = async (users) => {
+        await firebase.database().ref(`users/`).once('value')
+        .then(dataSnapShot => {
+                let allUserData = dataSnapShot.val()
+                for (let reqUser in allUserData[this.uid].requestingFriends){
+                    let major_names = ""
+                    for (let major in allUserData[reqUser].majors) {
+                        major_names = major_names.concat(allUserData[reqUser].majors[major].name)
+                        major_names = major_names.concat(" ")
+                    }
+                    allUserData[reqUser].allMajors = major_names
+                    let course_names = []
+                    for (let course in allUserData[reqUser].courses) {
+                        course_names.push(allUserData[reqUser].courses[course].name)
+                    }
+                    users.push({
+                        uid: reqUser,
+                        first_name: allUserData[reqUser].first_name,
+                        last_name: allUserData[reqUser].last_name,
+                        bio: allUserData[reqUser].bio,
+                        major: allUserData[reqUser].allMajors,
+                        classes: course_names,
+                        image: allUserData[reqUser].image,
+                    })
+                }
+            }
+        )
+    }
 
-    displayRecent(text, createdAt, user) {
+    getReqUsers = async (users) => {
+        await firebase.database().ref(`users/`).once('value')
+        .then(dataSnapShot => {
+                let allUserData = dataSnapShot.val()
+                for (let reqUser in allUserData[this.uid].requestingFriends){
+                    let major_names = ""
+                    for (let major in allUserData[reqUser].majors) {
+                        major_names = major_names.concat(allUserData[reqUser].majors[major].name)
+                        major_names = major_names.concat(" ")
+                    }
+                    allUserData[reqUser].allMajors = major_names
+                    let course_names = []
+                    for (let course in allUserData[reqUser].courses) {
+                        course_names.push(allUserData[reqUser].courses[course].name)
+                    }
+                    users.push({
+                        uid: reqUser,
+                        first_name: allUserData[reqUser].first_name,
+                        last_name: allUserData[reqUser].last_name,
+                        bio: allUserData[reqUser].bio,
+                        major: allUserData[reqUser].allMajors,
+                        classes: course_names,
+                        image: allUserData[reqUser].image,
+                    })
+                }
+            }
+        )
+    }
+
+    displayRecent(text, createdAt, user, uid) {
         if (text && createdAt) {
             if (user.name === "System") {
                 return text;
             }
-            let result = (user.uid === (this.uid) ? "You" : this.firstName(user.name)) + ": "
+            let result = (user._id === (this.uid) ? "You" : this.firstName(user.name)) + ": "
+            // Replace new line characters with spaces
+            text = text.replace(/\n/g, " ")
             if (text.length < 30) {
                 result += text;
             } else {
@@ -348,14 +380,14 @@ class Fire {
                 hours %= 12;
                 hours = hours !== 0 ? hours : 12;
                 minutes = minutes < 10 ? "0" + minutes : minutes;
-                result += " " + hours + ":" + minutes + " " + amPm;
+                result += " · " + hours + ":" + minutes + " " + amPm;
             } else if (difference_in_days < 7) {
                 let day = date.toString().split(" ")[0]
-                result += " " + day
+                result += " · " + day
             } else {
                 let arr =  date.toString().split(" ")
                 let day = arr[1] + + " " + arr[2]
-                result += " " + day
+                result += " · " + day
             }
             return result;
         }
