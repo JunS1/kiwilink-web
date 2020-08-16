@@ -51,8 +51,8 @@ export default class ForYou extends React.Component {
                             className="FoYouCardImg"
                             src={obj.image}
                         />
-                        <button onClick={() => this.requestFriend(idx)}>
-                            <div className="ForYouImgBotBar">
+                        <button className="ForYouImgBotBar" onClick={() => this.requestFriend(idx)}>
+                            <div>
                                 <img
                                     className="ForYouRequestButton"
                                     src={require("../assets/star.png")}
