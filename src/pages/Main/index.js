@@ -15,7 +15,9 @@ export default class Main extends React.Component {
         profile: true,
         for_you: false,
         explore: false,
-        message: false
+        message: false,
+        courses: [],
+        majors: []
     }
 
     componentDidMount() {
@@ -25,7 +27,15 @@ export default class Main extends React.Component {
             firebase.database().ref(`users/${uid}`).once('value').then(res => {
                 let js_data = res.val()
                 js_data.uid = uid;
-                this.setState({user: js_data, isLoading: false})
+                this.setState({user: js_data})
+            })
+            firebase.database().ref("majors/").once('value').then(res => {
+                let js_data = res.val()
+                this.setState({ majors: js_data })
+            })
+            firebase.database().ref("courses/").once('value').then(res => {
+                let js_data = res.val()
+                this.setState({ courses: js_data, isLoading: false })
             })
         });
     }
@@ -72,6 +82,18 @@ export default class Main extends React.Component {
         this.setState({ user: temp });
     }
 
+    saveCourses = (courses) => {
+        let temp = this.state.user;
+        temp.courses = courses;
+        this.setState({ user: temp });
+    }
+
+    saveMajors = (majors) => {
+        let temp = this.state.user;
+        temp.majors = majors;
+        this.setState({ user: temp });
+    }
+
     render() {
         return (
             this.state.isLoading ? null :
@@ -107,7 +129,17 @@ export default class Main extends React.Component {
                     
                     {/* Inside here we conditionally render different components*/}
                     <div className="MainContentContainer">
-                        {this.state.profile && <Profile user={this.state.user} saveBio={this.saveBio} className="MainContent"></Profile>}
+                        {this.state.profile && 
+                            <Profile 
+                                user={this.state.user} 
+                                saveBio={this.saveBio}
+                                saveCourses={this.saveCourses}
+                                saveMajors={this.saveMajors}
+                                className="MainContent"
+                                courses={this.state.courses}
+                                majors={this.state.majors}
+                            />
+                        }
                         {this.state.for_you && <ForYou className="MainContent"></ForYou>}
                         {this.state.explore && <Explore className="MainContent"></Explore>}
                         {this.state.message && <Message className="MainContent"></Message>}
