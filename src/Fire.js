@@ -1,9 +1,9 @@
 import firebase from './Firebase.js'
 
 class Fire {    
-    // get uid() {
-    //     return (firebase.auth().currentUser || {}).uid;
-    // }
+    get uid() {
+        return (firebase.auth().currentUser || {}).uid;
+    }
 
     // getRoom(room) {
     //     return firebase.database().ref(`messages/${room}`);
@@ -139,108 +139,108 @@ class Fire {
     //     return majors;
     // }
 
-    // // get users who are currenly not firends with current user
-    // // helper function used in getMatches
-    // getNonRelatedUsers = async (allUsers, currRelated, nonRelatedUsers) => {
-    //     if (
-    //         (currRelated != undefined) && 
-    //         (currRelated != null) && 
-    //         (currRelated.length != null) &&
-    //         (currRelated.length == 0)
-    //     ) {
-    //         allUsers = allUsers.filter((value) => {return value !== this.uid})
-    //         allUsers.map((user) => nonRelatedUsers.add(user))
-    //     } else {
-    //         // console.log("with current related users")
-    //         allUsers.map((user)=> {
-    //             if (user != this.uid) {
-    //                 // console.log("current user", user)
-    //                 let result = false;
-    //                 currRelated.map((relatedUser) => {
-    //                     if (relatedUser === user) {
-    //                         result = true;
-    //                     }
-    //                 })
-    //                 if (result === false) {
-    //                     nonRelatedUsers.add(user)
-    //                 }
-    //             }
-    //         })
-    //     }
-    // }
+    // get users who are currenly not firends with current user
+    // helper function used in getMatches
+    getNonRelatedUsers = async (allUsers, currRelated, nonRelatedUsers) => {
+        if (
+            (currRelated != undefined) && 
+            (currRelated != null) && 
+            (currRelated.length != null) &&
+            (currRelated.length == 0)
+        ) {
+            allUsers = allUsers.filter((value) => {return value !== this.uid})
+            allUsers.map((user) => nonRelatedUsers.add(user))
+        } else {
+            // console.log("with current related users")
+            allUsers.map((user)=> {
+                if (user != this.uid) {
+                    // console.log("current user", user)
+                    let result = false;
+                    currRelated.map((relatedUser) => {
+                        if (relatedUser === user) {
+                            result = true;
+                        }
+                    })
+                    if (result === false) {
+                        nonRelatedUsers.add(user)
+                    }
+                }
+            })
+        }
+    }
 
-    // // get usrs matched with major/course
-    // getMatches = async (users, prefEnable) => {
-    //     await firebase.database().ref('/users').once('value')
-    //     .then(userData => {
-    //         let jsUserData = (userData.val() || {}); // val(): convert to json format
-    //         let currFriends = (jsUserData[this.uid].friends || {})
-    //         let currRequested = (jsUserData[this.uid].requestedFriends || {})
-    //         let currRequesting = (jsUserData[this.uid].requestingFriends || {})
-    //         let currRelated = Object.assign(currFriends, currRequested, currRequesting)
-    //         // console.log("current related:", currRelated)
-    //         // set to store the current user's major(s)
-    //         let curr_user_majors = new Set();
-    //         for (let major in jsUserData[this.uid].majors) {
-    //             curr_user_majors.add(jsUserData[this.uid].majors[major].name);
-    //         }
-    //         // set to store current user's courses
-    //         const curr_user_courses = new Set();
-    //         for(let course in jsUserData[this.uid].courses) {
-    //             curr_user_courses.add(jsUserData[this.uid].courses[course].name);
-    //         }
+    // get usrs matched with major/course
+    getMatches = async (users, prefEnable) => {
+        await firebase.database().ref('/users').once('value')
+        .then(userData => {
+            let jsUserData = (userData.val() || {}); // val(): convert to json format
+            let currFriends = (jsUserData[this.uid].friends || {})
+            let currRequested = (jsUserData[this.uid].requestedFriends || {})
+            let currRequesting = (jsUserData[this.uid].requestingFriends || {})
+            let currRelated = Object.assign(currFriends, currRequested, currRequesting)
+            // console.log("current related:", currRelated)
+            // set to store the current user's major(s)
+            let curr_user_majors = new Set();
+            for (let major in jsUserData[this.uid].majors) {
+                curr_user_majors.add(jsUserData[this.uid].majors[major].name);
+            }
+            // set to store current user's courses
+            const curr_user_courses = new Set();
+            for(let course in jsUserData[this.uid].courses) {
+                curr_user_courses.add(jsUserData[this.uid].courses[course].name);
+            }
 
-    //         // select non friends users
-    //         let nonRelatedUsers = new Set()
-    //         this.getNonRelatedUsers(Object.keys(jsUserData), Object.keys(currRelated), nonRelatedUsers)
-    //         // filter relavent user
+            // select non friends users
+            let nonRelatedUsers = new Set()
+            this.getNonRelatedUsers(Object.keys(jsUserData), Object.keys(currRelated), nonRelatedUsers)
+            // filter relavent user
 
-    //         for (let user of nonRelatedUsers) {
-    //             let relevantUser = false;
-    //             let all_courses = []
-    //             let current_majors = ""
-    //             if(prefEnable) {
-    //                 for (let course in jsUserData[user].courses) {
-    //                     if (curr_user_courses.has(jsUserData[user].courses[course].name)) {
-    //                         relevantUser = true;
-    //                     }
-    //                     all_courses.push(jsUserData[user].courses[course].name)
-    //                 }
-    //                 for (let major in jsUserData[user].majors) {
-    //                     if (curr_user_majors.has(jsUserData[user].majors[major].name)) {
-    //                         relevantUser = true;
-    //                     }
-    //                     current_majors = current_majors.concat(jsUserData[user].majors[major].name)
-    //                     current_majors = current_majors.concat("\n")
-    //                     jsUserData[user].all_majors = current_majors
-    //                 }
-    //             } else {
-    //                 relevantUser = true
-    //                 for (let course in jsUserData[user].courses) {
-    //                     all_courses.push(jsUserData[user].courses[course].name)
-    //                 }
-    //                 for (let major in jsUserData[user].majors) {
-    //                     current_majors = current_majors.concat(jsUserData[user].majors[major].name)
-    //                     current_majors = current_majors.concat("\n")
-    //                     jsUserData[user].all_majors = current_majors
-    //                 }
-    //             }
-    //             if (relevantUser) {
-    //                 users.push({
-    //                     uid: user,
-    //                     first_name: jsUserData[user].first_name,
-    //                     last_name: jsUserData[user].last_name,
-    //                     bio: jsUserData[user].bio,
-    //                     major: jsUserData[user].all_majors,
-    //                     classes: all_courses,
-    //                     image: jsUserData[user].image
-    //                 });
-    //             }
-    //         }
-    //     }).catch(error => {
-    //         console.log(error)
-    //     })
-    // }
+            for (let user of nonRelatedUsers) {
+                let relevantUser = false;
+                let all_courses = []
+                let current_majors = ""
+                if(prefEnable) {
+                    for (let course in jsUserData[user].courses) {
+                        if (curr_user_courses.has(jsUserData[user].courses[course].name)) {
+                            relevantUser = true;
+                        }
+                        all_courses.push(jsUserData[user].courses[course].name)
+                    }
+                    for (let major in jsUserData[user].majors) {
+                        if (curr_user_majors.has(jsUserData[user].majors[major].name)) {
+                            relevantUser = true;
+                        }
+                        current_majors = current_majors.concat(jsUserData[user].majors[major].name)
+                        current_majors = current_majors.concat("\n")
+                        jsUserData[user].all_majors = current_majors
+                    }
+                } else {
+                    relevantUser = true
+                    for (let course in jsUserData[user].courses) {
+                        all_courses.push(jsUserData[user].courses[course].name)
+                    }
+                    for (let major in jsUserData[user].majors) {
+                        current_majors = current_majors.concat(jsUserData[user].majors[major].name)
+                        current_majors = current_majors.concat("\n")
+                        jsUserData[user].all_majors = current_majors
+                    }
+                }
+                if (relevantUser) {
+                    users.push({
+                        uid: user,
+                        first_name: jsUserData[user].first_name,
+                        last_name: jsUserData[user].last_name,
+                        bio: jsUserData[user].bio,
+                        major: jsUserData[user].all_majors,
+                        classes: all_courses,
+                        image: jsUserData[user].image
+                    });
+                }
+            }
+        }).catch(error => {
+            console.log(error)
+        })
+    }
     
     // group_name(others) {
     //     let group_chat_name = "";

@@ -1,0 +1,47 @@
+.ForYouHeader {
+    margin: 30px;
+
+}
+
+
+.ForYouTitle {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 35px;
+    line-height: 53px;
+    color: #42427D
+}
+
+.ForYouCardsContainer {
+    background-color: transparent;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
+    min-height: 400px;
+    overflow-x: auto;
+}
+
+.ForYouCardsContainer ::-webkit-scrollbar {
+    display: none;
+}
+
+.ForYouCard {
+    margin: 30vh;
+    background-color: #ecf0f1;
+    width: 300px;
+    height: 70vh;
+    margin: 20px;
+    color: #34495e;
+    border-radius: 20px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.FoYouCardImg {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    width: 300px;
+    height: 200;
+}
