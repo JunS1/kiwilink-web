@@ -32,7 +32,7 @@ export default class Explore extends React.Component {
             arr = courses
         }
         return (
-            arr.map(item=> {return (<p>{item}</p>)})
+            arr.map( item=> {return (<div className="RoundBox"><p className="ClassesArray">{item}</p></div>)})
         )
     }
 
@@ -71,10 +71,14 @@ export default class Explore extends React.Component {
                         </button>
                     </div>
                     <div className="ForYouUserInfoContainer">
-                        <p>{obj.first_name}</p>
+                        <div className="FullName">
+                            <p>{obj.first_name + " " + obj.last_name}</p>
+                        </div>
                         <p>{obj.bio}</p>
-                        <p>classes this quarter:</p>
-                        {this.renderClasses(obj.classes)}
+                        <p className="ClassTitle">classes this quarter:</p>
+                        <div className="ClassesArray">
+                            {this.renderClasses(obj.classes)}   
+                        </div>
                     </div>
                 </div>
             )
@@ -87,8 +91,8 @@ export default class Explore extends React.Component {
         return(
             <div className="ForYouContainer">
                 <div className="ForYouHeader">
-                    <div className="ForYouTitle">For You Page</div>
-                    <p>Scroll through this page to see randomized friend recommendations. Befriend random UW students!</p>
+                    <div className="ForYouTitle">Explore Page</div>
+                    <p>Scroll through this page (from left to right) to see randomized friend recommendations. Befriend random UW students!</p>
                 </div>
                 <section className="ForYouCardsContainer">
                     <div className="ForYouPlaceHolder"></div>
