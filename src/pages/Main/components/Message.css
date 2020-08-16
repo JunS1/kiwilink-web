@@ -70,3 +70,33 @@
     align-self: center;
     cursor: pointer;
 }
+
+.Create-Button {
+    background: #0BB68C;
+    border: 1.5px solid #0BB68C;
+    box-sizing: border-box;
+    border-radius: 15px;
+    color: white;
+    width: 150px;
+    height: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-self: center;
+    cursor: pointer;
+    margin-top: 50px;
+}
+
+.GroupName-Create {
+    margin-top: 15px;
+    height: 25px;
+    padding: 15px;
+    border-color: #0CB490;
+    color: #038175;
+    justify-content: center;
+}
+
+.Space-Between {
+    justify-content: space-evenly;
+    flex-direction: row;
+    display: flex;
+}
