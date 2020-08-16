@@ -2,6 +2,8 @@
 
 Note that the firebase API credentials are missing. If needed please contact jssong128@gmail.com
 
+You can access KiwiLink here: https://stinder-3b3b6.web.app/
+
 ## Available Scripts
 
 In the project directory, you can run:
