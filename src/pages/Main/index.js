@@ -15,7 +15,7 @@ export default class Main extends React.Component {
         profile: true,
         for_you: false,
         explore: false,
-        message: false
+        message: false,
     }
 
     componentDidMount() {

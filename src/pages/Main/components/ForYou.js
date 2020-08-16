@@ -77,7 +77,7 @@ export default class ForYou extends React.Component {
         return(
             <div className="ForYouContainer">
                 <div className="ForYouHeader">
-                    <div className="ForYouTitle">For You Page</div>
+                    <div className="ForYouTitle">Explore</div>
                     <p>Scroll through this page to see optimized friend recommendations. 
                         Befriend similar people with relevant classes and majors</p>
                 </div>
