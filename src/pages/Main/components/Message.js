@@ -3,6 +3,7 @@ import { GiftedChat } from "react-web-gifted-chat";
 import { v4 as uuidv4 } from 'uuid'
 import Fire from '../../../Fire'
 import firebase from '../../../Firebase'
+import "./Message.css"
 
 
 export default class Message extends React.Component {
@@ -46,6 +47,7 @@ export default class Message extends React.Component {
                 let temp_room_detail = this.state.room_details
                 let data_json = res.val();
                 data_json.id = room_id;
+                data_json.url = require("../assets/kiwi.png")
                 data_json.recent = {};
                 data_json.messages = ((temp_room_detail[room_id] && temp_room_detail[room_id].messages) || []);
                 temp_room_detail[room_id] = data_json;
@@ -80,10 +82,11 @@ export default class Message extends React.Component {
                 let newRooms = this.state.rooms
                 let room_id = friend.room
                 newRooms.push(room_id)
-                firebase.database().ref(`messages/${room_id}`).once('value').then(res => {
+                firebase.database().ref(`messages/${room_id}`).once('value').then(async (res) => {
                     let temp_room_detail = this.state.room_details
                     let data_json = res.val()
                     data_json.id = room_id;
+                    data_json.url = await Fire.picture(uid)
                     data_json.group_name = friend.first_name + " " + friend.last_name;
                     data_json.recent = {};
                     data_json.messages = ((temp_room_detail[room_id] && temp_room_detail[room_id].messages) || []);
@@ -137,7 +140,7 @@ export default class Message extends React.Component {
         Fire.getReadReceipts(id, (snap => {
             let temp = this.state.room_details;
             if (temp[id]) {
-                temp[id].members[Fire.uid].last_seen = snap.val()
+                temp[id].members[this.props.user.uid].last_seen = snap.val()
                 this.setState({ room_details: temp })   
             } 
         }))      
@@ -164,7 +167,13 @@ export default class Message extends React.Component {
         if (currentRoom) 
             return (
                 <GiftedChat
-                    user={{id: this.props.user.uid, name: (this.props.user.first_name + " " + this.props.user.first_name)}}
+                    showUserAvatar={true}
+                    user={{
+                        _id: this.props.user.uid,
+                        id: this.props.user.uid, 
+                        name: (this.props.user.first_name + " " + this.props.user.last_name), 
+                        avatar: this.props.user.image
+                    }}
                     messages={this.state.room_details[`${currentRoom}`].messages}
                     onSend={(messages)=> Fire.send(messages, currentRoom)}
                 />
@@ -176,29 +185,50 @@ export default class Message extends React.Component {
             <div 
                 style={styles.convoList}
             >
-                <div className="Message-Header">Convo</div>
+                <div className="Align">
+                    <img src={this.props.user.image} className="You"/>
+                    <div className="Message-Header">
+                        Convos
+                    </div>
+                </div>
+                <button className="Create">
+                    Create new group +
+                </button>
                 {
                     Object.values(this.state.room_details).sort((a,b) => this.compare(a,b))
                     .map(item => {
                         return (
                             <button
+                                className="Convos"
                                 type="button"    
                                 onClick={()=>{
+                                    if (this.state.currentRoom) {
+                                        // post time stamp
+                                        firebase.database().ref(`messages/${this.state.currentRoom}/members/${this.props.user.uid}`).update({
+                                            last_seen: firebase.database.ServerValue.TIMESTAMP
+                                        })
+                                    }
                                     this.setState({
                                         currentRoom: item.id
                                     })
                                 }}
                             >   
+                                <img src={item.url} className="Avatar"/>
                                 <div>
-                                    {item.group_name}
-                                </div> 
-                                <div>
-                                    {
-                                        !item.recent.user ? 
-                                            null 
-                                        : 
-                                        Fire.displayRecent(item.recent.text, item.recent.createdAt, item.recent.user)
-                                    }
+                                    <div className="GroupName">
+                                        {item.group_name}
+                                    </div>
+                                    <div className={this.state.currentRoom === item.id ? 
+                                        "read" : item.members[this.props.user.uid].last_seen < item.recent.createdAt ? 
+                                        "Unread" : "read"}
+                                    >
+                                        {
+                                            !item.recent.user ? 
+                                                null 
+                                            : 
+                                            Fire.displayRecent(item.recent.text, item.recent.createdAt, item.recent.user, this.props.user.uid)
+                                        }
+                                    </div>
                                 </div>
                             </button>
                         )

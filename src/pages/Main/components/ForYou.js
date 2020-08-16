@@ -21,8 +21,18 @@ export default class ForYou extends React.Component {
     }
 
     renderClasses = (courses) => {
+        let limit = 3
+        let arr = []
+        if (courses.length > limit) {
+            for (let i = 0; i < (limit - 1); i++) {
+                arr.push(courses[i]);
+            }
+            arr.push("and more...");
+        } else {
+            arr = courses
+        }
         return (
-            courses.map( item=> {return (<p>{item}</p>)})
+            arr.map( item=> {return (<p>{item}</p>)})
         )
     }
 

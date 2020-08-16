@@ -1,4 +1,71 @@
 .Message-Header {
     color: #038175;
-    font-size: "30px";
+    font-weight: bold;
+    font-size: 45px;
+    margin-left: 15px;
+}
+
+.Convos {
+    background-color: transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    display: inline-flex;
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+
+.read {
+    font-size: 14px;
+    margin-left: 5px;
+    margin-top: 25px;
+}
+
+.Unread {
+    font-size: 14px;
+    margin-left: 5px;
+    margin-top: 25px;
+    font-weight: 700;
+}
+
+.GroupName {
+    position: absolute;
+    margin-left: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    justify-content: flex-start;
+    margin-left: 5px;
+}
+
+.Avatar {
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+}
+
+.You {
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.Align {
+    display: inline-flex;
+}
+
+.Create {
+    background: #0BB68C;
+    border: 1.5px solid #0BB68C;
+    box-sizing: border-box;
+    border-radius: 15px;
+    color: white;
+    width: 300px;
+    height: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-self: center;
 }
