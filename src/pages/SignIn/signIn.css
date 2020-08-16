@@ -1,0 +1,28 @@
+.Container {
+    /* display: flex;
+    flex-direction: column; */
+    height: 100%;
+    text-align: center;
+    /* background-color: yellow;
+    
+    
+    */
+}
+
+.Header {
+    height: 10%;
+    /* flex-basis: auto; */
+    background-color: salmon;
+}
+
+
+.Body {
+    height: 90%;
+    /* flex-basis: auto; */
+    background-color: white;
+}
+
+.SignInInput {
+    display: flex;
+    flex-direction: column;
+}
