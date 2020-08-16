@@ -58,8 +58,18 @@ export default class Request extends React.Component {
     }
 
     renderClasses = (courses) => {
+        let limit = 3
+        let arr = []
+        if (courses.length > limit) {
+            for (let i = 0; i < (limit - 1); i++) {
+                arr.push(courses[i]);
+            }
+            arr.push("and more...");
+        } else {
+            arr = courses
+        }
         return (
-            courses.map( item=> {return (<p>{item}</p>)})
+            arr.map( item=> {return (<p>{item}</p>)})
         )
     }
 
@@ -71,9 +81,9 @@ export default class Request extends React.Component {
             return (
                 <div className="RequestContainer">
                     <div className= {"RequestCard"}>
-                        <div className="ForYouImgContainer">
+                        <div className="RequestImgContainer">
                             <img
-                                className="FoYouCardImg"
+                                className="RequestCardImg"
                                 src={obj.image}
                             />
                             <button className="ForYouImgBotBar" onClick={() => this.requestFriend(idx)}>

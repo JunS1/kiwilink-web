@@ -16,6 +16,20 @@
 
 }
 
+.RequestCardImg {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    width: 300px;
+    height: 30vh;
+}
+
+.RequestImgContainer {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    width: 300px;
+    height: 30vh;
+}
+
 .RequestButtonContainer {
     width: 300px;
     height: 10vh;
