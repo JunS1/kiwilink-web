@@ -167,6 +167,7 @@ export default class Profile extends React.Component {
                                     filterOptions={this.filter(this.props.majors)}
                                     className="Dropdown"
                                     onChange={item => this.setState({ newMajors: item })}
+                                    placeholder="Search for majors"
                                 />
                             </div>
                             <button className="Edit-Button" onClick={this.saveMajors}>
