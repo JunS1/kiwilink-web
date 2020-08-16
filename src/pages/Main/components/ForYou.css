@@ -61,6 +61,12 @@
 .ForYouImgBotBar {
     margin-top: -100px;
     right: 20px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
 }
 
 .ForYouRequestButton {
@@ -69,7 +75,3 @@
     /* bottom: 5px; */
 }
 
-.ForYouUserInfoContainer {
-    /* position: "relative"; */
-    /* top: 50%; */
-}

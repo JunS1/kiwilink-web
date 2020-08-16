@@ -62,7 +62,7 @@
 .Line {
     border: 0.05px solid #000000;
     margin-top: 35px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .Bio {
@@ -79,4 +79,18 @@
     font-size: 25px;
     margin-bottom: 10px;
     color: #038175;
+}
+
+.Bio-Area {
+    height: 100px;
+    width: 400px;
+    border-radius: 20px;
+    padding: 15px;
+    border-color: #0CB490;
+    color: #038175;
+}
+
+.Dropdown {
+    color: #0CB490;
+    margin-top: 25px;
 }
