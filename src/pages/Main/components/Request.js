@@ -58,7 +58,7 @@ export default class Request extends React.Component {
     }
 
     renderClasses = (courses) => {
-        let limit = 3
+        let limit = 2
         let arr = []
         if (courses.length > limit) {
             for (let i = 0; i < (limit - 1); i++) {
