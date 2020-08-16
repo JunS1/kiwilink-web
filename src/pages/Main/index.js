@@ -11,6 +11,7 @@ import Message from './components/Message';
 export default class Main extends React.Component {
     state = {
         user: {},
+        isLoading: true,
         profile: true,
         for_you: false,
         explore: false,
@@ -20,9 +21,10 @@ export default class Main extends React.Component {
     componentDidMount() {
         firebase.auth().onAuthStateChanged(async (user) => {
             let uid = user.uid
+            console.log(uid)
             firebase.database().ref(`users/${uid}`).once('value').then(res => {
                 let js_data = res.val()
-                this.setState({user: js_data})
+                this.setState({user: js_data, isLoading: false})
             })
         });
     }
@@ -65,6 +67,7 @@ export default class Main extends React.Component {
 
     render() {
         return (
+            this.state.isLoading ? null :
             <div className="Container">
                 <header className="Header"></header>
                 <div className="Body">
