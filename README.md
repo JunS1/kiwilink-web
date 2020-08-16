@@ -4,6 +4,9 @@ Note that the firebase API credentials are missing. If needed please contact jss
 
 You can access KiwiLink here: https://stinder-3b3b6.web.app/
 
+You can create an account by just signing up with an email and password. Then, you'll be able to edit your profile information. Lastly, you can visit the 
+'For You' or 'Explore' page to see other users and befriend them!
+
 ## Available Scripts
 
 In the project directory, you can run:
