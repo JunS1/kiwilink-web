@@ -191,7 +191,7 @@ export default class Message extends React.Component {
                         Convos
                     </div>
                 </div>
-                <button className="Create">
+                <button className="Create" onClick={() => console.log("clicked")}>
                     Create new group +
                 </button>
                 {

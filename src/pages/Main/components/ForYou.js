@@ -58,7 +58,7 @@ export default class ForYou extends React.Component {
                 <div className= {"ForYouCard"}>
                     <div className="ForYouImgContainer">
                         <img
-                            className="FoYouCardImg"
+                            className="ForYouCardImg"
                             src={obj.image}
                         />
                         <button className="ForYouImgBotBar" onClick={() => this.requestFriend(idx)}>
