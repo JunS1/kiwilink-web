@@ -146,7 +146,7 @@ export default class Profile extends React.Component {
                     <div>
                         <div>
                             <button className="Edit-Button" onClick={() => this.setState({ editCourses: true })}>
-                                {this.state.courses.length === 0 ? "Click here to add classes" : "Classes (click here to edit)"}
+                                {this.state.courses && this.state.courses.length === 0 ? "Click here to add classes" : "Classes (click here to edit)"}
                             </button>
                         </div>
                         <div className="ItemList">
@@ -183,7 +183,7 @@ export default class Profile extends React.Component {
                     <div>
                         <div>
                             <button className="Edit-Button" onClick={() => this.setState({ editMajors: true })}>
-                                {this.state.majors.length === 0 ? "Click here to add majors" : "Major(s) (click here to edit)"}
+                                {this.state.majors && this.state.majors.length === 0 ? "Click here to add majors" : "Major(s) (click here to edit)"}
                             </button>
                         </div>
                         <div className="ItemList">
