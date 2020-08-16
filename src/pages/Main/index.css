@@ -9,7 +9,7 @@
     background-color: #0CB490;
 }
 
-.MainContent {
+.MainContentContainer {
     position: absolute;
     left: 300px;
     width: calc(100vw - 300px);

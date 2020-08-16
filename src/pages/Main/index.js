@@ -3,6 +3,7 @@ import firebase from '../../Firebase'
 
 import "./index.css"
 import logo from '../../logo.svg'
+import Profile from './components/Profile'
 
 export default class Main extends React.Component {
     state = {
@@ -92,8 +93,8 @@ export default class Main extends React.Component {
                     </nav>
                     
                     {/* Inside here we conditionally render different components*/}
-                    <div className="MainContent">
-                        <p>welcome</p>
+                    <div className="MainContentContainer">
+                        <Profile className="MainContent"></Profile>
                     </div>
                     {/* <p>This is Main page</p> */}
                 </div>
