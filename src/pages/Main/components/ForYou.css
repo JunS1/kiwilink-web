@@ -14,17 +14,21 @@
 
 .ForYouCardsContainer {
     background-color: transparent;
-    margin: 0;
+    margin: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 100%;
+    width: 100%;
     min-height: 400px;
-    overflow-x: auto;
+    overflow-x: scroll;
 }
 
 .ForYouCardsContainer ::-webkit-scrollbar {
     display: none;
+}
+
+.ForYouPlaceHolder {
+    margin-left: 600px;
 }
 
 .ForYouCard {
@@ -39,9 +43,33 @@
     box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
 }
 
+
+.ForYouImgContainer {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    width: 300px;
+    height: 37vh;
+}
+
 .FoYouCardImg {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     width: 300px;
-    height: 200;
+    height: 37vh;
+}
+
+.ForYouImgBotBar {
+    margin-top: -100px;
+    right: 20px;
+}
+
+.ForYouRequestButton {
+    height: 50px;
+    width: 50px;
+    /* bottom: 5px; */
+}
+
+.ForYouUserInfoContainer {
+    /* position: "relative"; */
+    /* top: 50%; */
 }
