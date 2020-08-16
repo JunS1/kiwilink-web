@@ -6,58 +6,56 @@ export default class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            bio: this.props.user.bio,
+            bio: "",
         }
     }
 
     componentDidMount () {
-        console.log("componenet did mount")
-        if (this.props & this.props.uri) {
-            console.log("update uri!")
-            this.setState({
-                uri: this.props.uri
-            })
-        }
-    }
-
-    renderCourses = () => {
-        console.log("render courses")
-        console.log("courses: " + this.props.user.courses)
-        for (let item in this.props.user.courses) {
-            console.log(item)
-            return (
-                <p>{this.props.user.courses[item].name}</p>
-            )
-
-        }
+        this.setState({ bio : this.props.user.bio })
     }
 
     render () {
         return (
             <div className="ProfileContainer">
-                <img 
-                    className="ProfilePicture"
-                    src={this.props.user.image}
-                    alt="loading"
-                >
-                </img>
-                <p>Welcome {this.props.user.first_name} {this.props.user.last_name}</p>
-                <input 
-                    className="BioBox"
-                    placeholder="Put your bio here"
-                    type="text"
-                    value={this.state.bio}
-                    onChange={event => {
-                        this.setState({bio: event.target.value});
-                    }} 
-                >
-                </input>
-
-                <p>classes</p>
-                <div className="ClassList">
-                    {
-                        this.renderCourses()
-                    }
+                <div>
+                    <img 
+                        className="ProfilePicture"
+                        src={this.props.user.image}
+                        alt="loading"
+                    >
+                    </img>
+                </div>
+                <div className="Welcome">
+                    Welcome, {this.props.user.first_name} {this.props.user.last_name}
+                </div>
+                <div className="Bio">
+                        {this.state.bio}
+                </div>
+                <div>
+                    <button className="Edit-Bio">
+                        click to edit bio
+                    </button>
+                </div>
+                <div className="Line"></div>
+                <div>
+                    <div>
+                        <button className="Edit-Button">Classes (click here to edit)</button>
+                    </div>
+                    <div className="ItemList">
+                        {
+                            this.props.user.courses && this.props.user.courses.map(course => <button className="Item" key={course.id}>{course.name}</button>)
+                        }
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <button className="Edit-Button">Major(s) (click here to edit)</button>
+                    </div>
+                    <div className="ItemList">
+                        {
+                            this.props.user.majors && this.props.user.majors.map(major => <button className="Item" key={major.id}>{major.name}</button>)
+                        }
+                    </div>
                 </div>
             </div>
         )
