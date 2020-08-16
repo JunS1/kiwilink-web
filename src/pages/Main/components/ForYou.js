@@ -42,7 +42,7 @@ export default class ForYou extends React.Component {
     requestFriend = (idx) => {
         let currUser = this.state.users[idx]
         if (currUser.id !== null) {
-            // Fire.requestFriend(currUser.uid) 
+            Fire.requestFriend(currUser.uid) 
         } else {
             console.warn("request user id is null")
         }

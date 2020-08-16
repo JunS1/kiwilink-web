@@ -33,7 +33,7 @@ export default class Request extends React.Component {
     removeRequest = (idx) => {
         let reqUser = this.state.users[idx]
         if (reqUser.uid){
-            // Fire.removeRequest(this.state.reqUsers[idx].uid)
+            Fire.removeRequest(this.state.reqUsers[idx].uid)
         }
         // if the card handled is the last one request, rerender screen
         let newReqUsers = this.state.users
@@ -46,7 +46,7 @@ export default class Request extends React.Component {
     confirmRequest = (idx) => {
         let reqUser = this.state.users[idx]
         if (reqUser.uid) {
-            // Fire.confirmRequest(reqUser.uid, reqUser.first_name, reqUser.last_name)
+            Fire.confirmRequest(reqUser.uid, reqUser.first_name, reqUser.last_name)
         } else {
             console.warn("confirm user id is null")
         }

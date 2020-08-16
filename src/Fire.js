@@ -395,96 +395,96 @@ class Fire {
     //     firebase.database().ref(`users/${this.uid}/requestingFriends/`).update({[uid]: name})
     // }
 
-    // // remove a friend request in given user who request friend to current user
-    // removeRequest(uid) {
-    //     firebase.database().ref(`users/${this.uid}/requestingFriends/${uid}`).remove()
-    //     .then(() => {  
-    //         // console.log('remove user ', uid, name, 'from the requesting list')
-    //     }).catch((error) => {
-    //         console.log(error)
-    //     })
-    //     firebase.database().ref(`users/${uid}/requestedFriends/${this.uid}`).remove()
-    //     .then(() => {
-    //         // console.log('remove current user', this.uid, this.name, 'from the requested list')
-    //     }).catch((error) => {
-    //         console.log(error)
-    //     })
-    // }
+    // remove a friend request in given user who request friend to current user
+    removeRequest(uid) {
+        firebase.database().ref(`users/${this.uid}/requestingFriends/${uid}`).remove()
+        .then(() => {  
+            // console.log('remove user ', uid, name, 'from the requesting list')
+        }).catch((error) => {
+            console.log(error)
+        })
+        firebase.database().ref(`users/${uid}/requestedFriends/${this.uid}`).remove()
+        .then(() => {
+            // console.log('remove current user', this.uid, this.name, 'from the requested list')
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
 
-    // // confirm a friend request:
-    // // 1) add both users to their corresponding friend list
-    // // 2) remove both users from requested/requesting list
-    // confirmRequest(uid, first_name, last_name) {
-    //     // create a message room for both people
-    //     firebase.database().ref('/messages').push({ 
-    //         texts: [
-    //             {
-    //                 _id: 1,
-    //                 text: 'Say hi to your new friend!',
-    //                 timestamp: firebase.database.ServerValue.TIMESTAMP,
-    //                 user: {
-    //                     _id: 1,
-    //                     name: "System"
-    //                 },
-    //                 system: true
-    //             }
-    //         ],
-    //         group_name: ""
-    //     }).then(snap => {
-    //         firebase.database().ref(`/messages/${snap.key}/members/`).set({
-    //             [uid]: {
-    //                 first_name: first_name,
-    //                 last_name: last_name,
-    //                 last_seen: null
-    //             },
-    //             [this.uid]: {
-    //                 first_name: `${this.first_name}`,
-    //                 last_name: `${this.last_name}`,
-    //                 last_seen: null
-    //             },
-    //         });
-    //         // add to friends list
-    //         firebase.database().ref(`users/${this.uid}/friends/`).set({
-    //             [uid]: {
-    //                 first_name: first_name,
-    //                 last_name: last_name,
-    //                 room: snap.key,
-    //             }
-    //         })
-    //         .then(() => {
-    //             // console.log('add user', uid, name, 'to', this.name+'\'s friends list')
-    //         }).catch((error) => {
-    //             console.log(error)
-    //         })
-    //         // add to friends list
-    //         firebase.database().ref(`users/${uid}/friends/`).set({
-    //             [this.uid]: {
-    //                 first_name: `${this.first_name}`,
-    //                 last_name: `${this.last_name}`,
-    //                 room: snap.key,
-    //             }
-    //         })
-    //         .then(() => {
-    //             // console.log('add current user', this.uid, this.name, 'to', name+'\'s friends list')
-    //         }).catch((error) => {
-    //             console.log(error)
-    //         })
-    //     })
+    // confirm a friend request:
+    // 1) add both users to their corresponding friend list
+    // 2) remove both users from requested/requesting list
+    confirmRequest(uid, first_name, last_name) {
+        // create a message room for both people
+        firebase.database().ref('/messages').push({ 
+            texts: [
+                {
+                    _id: 1,
+                    text: 'Say hi to your new friend!',
+                    timestamp: firebase.database.ServerValue.TIMESTAMP,
+                    user: {
+                        _id: 1,
+                        name: "System"
+                    },
+                    system: true
+                }
+            ],
+            group_name: ""
+        }).then(snap => {
+            firebase.database().ref(`/messages/${snap.key}/members/`).update({
+                [uid]: {
+                    first_name: first_name,
+                    last_name: last_name,
+                    last_seen: null
+                },
+                [this.uid]: {
+                    first_name: `${this.first_name}`,
+                    last_name: `${this.last_name}`,
+                    last_seen: null
+                },
+            });
+            // add to friends list
+            firebase.database().ref(`users/${this.uid}/friends/`).update({
+                [uid]: {
+                    first_name: first_name,
+                    last_name: last_name,
+                    room: snap.key,
+                }
+            })
+            .then(() => {
+                // console.log('add user', uid, name, 'to', this.name+'\'s friends list')
+            }).catch((error) => {
+                console.log(error)
+            })
+            // add to friends list
+            firebase.database().ref(`users/${uid}/friends/`).update({
+                [this.uid]: {
+                    first_name: `${this.first_name}`,
+                    last_name: `${this.last_name}`,
+                    room: snap.key,
+                }
+            })
+            .then(() => {
+                // console.log('add current user', this.uid, this.name, 'to', name+'\'s friends list')
+            }).catch((error) => {
+                console.log(error)
+            })
+        })
 
-    //     // remove from requested/requesting lists
-    //     firebase.database().ref(`users/${this.uid}/requestingFriends/${uid}`).remove()
-    //     .then(() => {  
-    //         // console.log('remove user ', uid, name, 'from the requesting list')
-    //     }).catch((error) => {
-    //         console.log(error)
-    //     })
-    //     firebase.database().ref(`users/${uid}/requestedFriends/${this.uid}`).remove()
-    //     .then(() => {
-    //         // console.log('remove current user', this.uid, this.name, 'from the requested list')
-    //     }).catch((error) => {
-    //         console.log(error)
-    //     })
-    // }
+        // remove from requested/requesting lists
+        firebase.database().ref(`users/${this.uid}/requestingFriends/${uid}`).remove()
+        .then(() => {  
+            // console.log('remove user ', uid, name, 'from the requesting list')
+        }).catch((error) => {
+            console.log(error)
+        })
+        firebase.database().ref(`users/${uid}/requestedFriends/${this.uid}`).remove()
+        .then(() => {
+            // console.log('remove current user', this.uid, this.name, 'from the requested list')
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
 
     // removeFriend(uid){
     //     console.log(`remove ${uid} from ${this.uid}'s friends list`)
